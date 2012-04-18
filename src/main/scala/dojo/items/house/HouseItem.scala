@@ -1,7 +1,7 @@
 package dojo.items.house
 
 import dojo.items.Item
+import dojo.items.Purchasable
 
-class HouseItem extends Item {
-	val id =0
+abstract class HouseItem extends Item with Purchasable{
 }
