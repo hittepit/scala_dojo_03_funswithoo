@@ -5,17 +5,23 @@ import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.matchers.ShouldMatchers
+import dojo.items.artifacts.Unicorn
+import dojo.items.Item
 
 @RunWith(classOf[JUnitRunner])
 class FunsWithOOTests extends FunSuite with ShouldMatchers{
 
   // all items should have an id
   test("Unicorn should have id of 1"){
-    assert(false)
+    val unicorn = new Unicorn
+    unicorn.id should equal(1)
   }
 
   test("anonymous items should have an id"){
-    assert(false)
+    val item = new Item{
+      val id = 1
+    }
+    item.id should equal(1)
   }
 
   // all fashion and house items should be able to be bought for cash deducted from user
