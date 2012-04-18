@@ -9,6 +9,8 @@ import dojo.items.artifacts.Unicorn
 import dojo.items.Item
 import dojo.items.fashion.Hat
 import dojo.items.house.Chair
+import dojo.items.artifacts.MachineGunUnicorn
+import dojo.items.house.JukeBox
 
 @RunWith(classOf[JUnitRunner])
 class FunsWithOOTests extends FunSuite with ShouldMatchers{
@@ -20,29 +22,27 @@ class FunsWithOOTests extends FunSuite with ShouldMatchers{
   }
 
   test("anonymous items should have an id"){
-    val item = new Item{
-      val id = 1
-    }
-    item.id should equal(1)
+    val item = new Item{}
+    item.id should equal(0)
   }
 
   // all fashion and house items should be able to be bought for cash deducted from user
 
   test("should buy hat and deduct 5 cash from user"){
     val hat = new Hat
-    assertPurchasableItemCashDeduction(hat) should equal (5)
+    assertPurchasableItemCashDeduction(hat)
   }
 
   test("should buy chair and deduct 3 cash from user"){
     val chair = new Chair
-    assertPurchasableItemCashDeduction(chair) should equal (7)
+    assertPurchasableItemCashDeduction(chair)
   }
 
-  def assertPurchasableItemCashDeduction(item:Purchasable):Int = {
+  def assertPurchasableItemCashDeduction(item:Purchasable) {
     val balance = 10
     val user = new User(balance)
     user.buy(item)
-    user.cash
+    user.cash should equal(10-item.price)
   }
 
   // MachineGunUnicorn and JukeBox have special actions that are available a set time after creation
@@ -50,13 +50,15 @@ class FunsWithOOTests extends FunSuite with ShouldMatchers{
   // * JukeBox prints Blah-Blah
 
   test("MachineGunUnicorn goes Bam-Bam"){
-    assert(false)
-    //assertTimedItem(Some("Bam-Bam"), machineGunUnicorn, delay)
+    val machineGunUnicorn = new MachineGunUnicorn
+    val delay=10
+    assertTimedItem(Some("Bam-Bam"), machineGunUnicorn, delay)
   }
 
   test("JukeBox goes Blah-Blah"){
-    assert(false)
-    //assertTimedItem(Some("Blah-Blah"), jukeBox, delay)
+    val jukeBox = new JukeBox
+    val delay=100
+    assertTimedItem(Some("Blah-Blah"), jukeBox, delay)
   }
 
   def assertTimedItem(expected: Some[Any], timedItem: TimedItem, delay: Int){
